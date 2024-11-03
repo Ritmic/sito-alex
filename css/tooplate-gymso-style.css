@@ -520,6 +520,18 @@ https://www.tooplate.com/view/2119-gymso-fitness
   }
 
 
+
+  /*---------------------------------------
+     NEWS              
+  -----------------------------------------*/
+
+  .grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    justify-items: center;
+  }
+
   /*---------------------------------------
      CONTACT              
   -----------------------------------------*/
