@@ -79,7 +79,7 @@
 }
 
 $(document).ready(function() {
-    $.getJSON('links.json', function(data) {
+    $.getJSON('js/links.json', function(data) {
         let gridContainer = $('.grid');
         
         if (gridContainer.length === 0) {
