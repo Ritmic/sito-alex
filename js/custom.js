@@ -13,6 +13,12 @@
       anchorPlacement: 'center-bottom'
     });
 
+    //MASONRY LAYOUT GIRD 
+    $('.grid').masonry({
+      // options
+      itemSelector: '.grid-item',
+      columnWidth: 370
+    });
 
     // SMOOTHSCROLL NAVBAR
     $(function() {
@@ -30,7 +36,7 @@
   async function loadLinks() {
     try {
         // Fetch the JSON file containing the links
-        const response = await fetch('links.json'); // Replace with the actual path to your JSON file
+        const response = await fetch('js/links.json'); // Replace with the actual path to your JSON file
         const data = await response.json();
 
         // Get the container where the grid items will be added
@@ -43,26 +49,13 @@
         }
 
         // Iterate through each link and create the necessary HTML structure
-        data.links.forEach(link => {
+        data.iframes.forEach(link => {
             const gridItem = document.createElement('div');
             gridItem.classList.add('grid-item');
             gridItem.setAttribute('data-aos', 'fade-up');
             gridItem.setAttribute('data-aos-delay', '400');
             
-            const fbPost = document.createElement('div');
-            fbPost.classList.add('fb-post', 'mb-4');
-            fbPost.setAttribute('data-href', link);
-            fbPost.setAttribute('data-width', '350');
-            fbPost.setAttribute('data-show-text', 'true');
-            
-            const blockquote = document.createElement('blockquote');
-            blockquote.setAttribute('cite', link);
-            blockquote.setAttribute('target', '_top');
-            blockquote.classList.add('fb-xfbml-parse-ignore');
-            blockquote.innerHTML = `<p>Facebook Post</p>`;
-            
-            fbPost.appendChild(blockquote);
-            gridItem.appendChild(fbPost);
+            gridItem.innerHTML = link;
             gridContainer.appendChild(gridItem);
         });
         
@@ -78,48 +71,5 @@
     }
 }
 
-$(document).ready(function() {
-    $.getJSON('js/links.json', function(data) {
-        let gridContainer = $('.grid');
-        
-        if (gridContainer.length === 0) {
-            console.error('Grid container not found');
-            return;
-        }
-        
-        $.each(data.links, function(index, link) {
-            let gridItem = $('<div>', {
-                class: 'grid-item',
-                'data-aos': 'fade-up',
-                'data-aos-delay': '400'
-            });
-            
-            let fbPost = $('<div>', {
-                class: 'fb-post mb-4',
-                'data-href': link,
-                'data-width': '350',
-                'data-show-text': 'true'
-            });
-            
-            let blockquote = $('<blockquote>', {
-                cite: link,
-                target: '_top',
-                class: 'fb-xfbml-parse-ignore'
-            }).html('<p>Facebook Post</p>');
-            
-            fbPost.append(blockquote);
-            gridItem.append(fbPost);
-            gridContainer.append(gridItem);
-        });
-        
-        // Load Facebook SDK script after links are loaded
-        $('<script>', {
-            async: true,
-            defer: true,
-            crossorigin: 'anonymous',
-            src: 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v21.0'
-        }).appendTo('body');
-    }).fail(function() {
-        console.error('Error loading links');
-    });
-});
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', loadLinks);
